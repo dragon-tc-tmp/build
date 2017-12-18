@@ -87,6 +87,16 @@ finalize() {
 cp $TOOLCHAIN_ROOT/build/DragonTC-$DTC_VERSION.mk $PREFIX_PATH/DragonTC.mk;
 current_date=$(date "+%Y%m%d");
 echo "$DTC_VERSION-DragonTC-$current_date" >> $PREFIX_PATH/VERSION;
+
+# Copy AOSP libFuzzer prebuilt
+if [ "$DTC_VERSION" == "5.0" ];
+then
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/5.0/** $PREFIX_PATH/;
+fi;
+if [ "$DTC_VERSION" == "6.0" ];
+then
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/6.0/** $PREFIX_PATH/;
+fi;
 }
 
 
