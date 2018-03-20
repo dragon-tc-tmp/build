@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2017 DragonTC
+# Copyright (C) 2018 DragonTC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 #   You may not use this file except in compliance with the License.
@@ -21,4 +21,4 @@ export CLANG := $(LLVM_PREBUILTS_PATH)/clang$(BUILD_EXECUTABLE_SUFFIX)
 export CLANG_CXX := $(LLVM_PREBUILTS_PATH)/clang++$(BUILD_EXECUTABLE_SUFFIX)
 export LLVM_AS := $(LLVM_PREBUILTS_PATH)/llvm-as$(BUILD_EXECUTABLE_SUFFIX)
 export LLVM_LINK := $(LLVM_PREBUILTS_PATH)/lld-link$(BUILD_EXECUTABLE_SUFFIX)
-export LLVM_INCLUDES := $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(DRAGONTC_VERSION)/lib/clang/6.0%/include
+export LLVM_INCLUDES := $(LLVM_PREBUILTS_BASE)/$(BUILD_OS)-x86/$(DRAGONTC_VERSION)/lib64/clang/6.0%/include

@@ -92,19 +92,28 @@ echo "$DTC_VERSION-DragonTC-$current_date" >> $PREFIX_PATH/VERSION;
 # Copy AOSP libFuzzer prebuilt
 if [ "$DTC_VERSION" == "5.0" ];
 then
-    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/5.0/** $PREFIX_PATH/;
+    # Copy AOSP prebuilt files
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/5.0.0/lib/linux/;
+    # Copy stdatomic from bionic
+    cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/5.0.0/include/stdatomic.h;
 fi;
 if [ "$DTC_VERSION" == "6.0" ];
 then
-    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/6.0/** $PREFIX_PATH/;
+    # Copy AOSP prebuilt files
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/6.0.0/lib/linux/;
+    # Copy stdatomic from bionic
+    cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/6.0.0/include/stdatomic.h;
 fi;
 if [ "$DTC_VERSION" == "7.0" ];
 then
     # Copy AOSP prebuilt files
-    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/7.0/** $PREFIX_PATH/;
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/7.0.0/lib/linux/;
     # Copy stdatomic from bionic
     cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/7.0.0/include/stdatomic.h;
 fi;
+
+    # Copy libfuzzer headers
+    cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/prebuilt_include $PREFIX_PATH/prebuilt_include;
 }
 
 
