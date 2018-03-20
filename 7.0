@@ -22,7 +22,7 @@
 ###########################################################################
 
 # Find Source Root
-cd ../ && export TOOLCHAIN_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+export TOOLCHAIN_ROOT="$(dirname "$(pwd)")"
 
 # Define specifications of remote repositories.
 export REMOTE_URL="https://github.com/dragon-tc-tmp"
