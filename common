@@ -96,6 +96,7 @@ then
     cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/5.0.0/lib/linux/;
     # Copy stdatomic from bionic
     cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/5.0.0/include/stdatomic.h;
+    cd $TOOLCHAIN_ROOT/out/5.0/lib64/clang; ln -s 5.0.0 5.0; cd $TOOLCHAIN_ROOT/build
 fi;
 if [ "$DTC_VERSION" == "6.0" ];
 then
@@ -103,6 +104,7 @@ then
     cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/6.0.0/lib/linux/;
     # Copy stdatomic from bionic
     cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/6.0.0/include/stdatomic.h;
+    cd $TOOLCHAIN_ROOT/out/6.0/lib64/clang; ln -s 6.0.0 6.0; cd $TOOLCHAIN_ROOT/build
 fi;
 if [ "$DTC_VERSION" == "7.0" ];
 then
@@ -110,6 +112,7 @@ then
     cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/libclang/** $PREFIX_PATH/lib64/clang/7.0.0/lib/linux/;
     # Copy stdatomic from bionic
     cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/7.0.0/include/stdatomic.h;
+    cd $TOOLCHAIN_ROOT/out/7.0/lib64/clang; ln -s 7.0.0 7.0; cd $TOOLCHAIN_ROOT/build
 fi;
 
     # Copy libfuzzer headers
