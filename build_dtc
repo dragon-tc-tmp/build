@@ -1,0 +1,107 @@
+#!/bin/bash
+
+export DTC_USE_LLD="OFF";
+export DTC_USE_THINLTO="OFF";
+
+# Enable ccache if requested
+if ! [ -z "$DTC_USE_CCACHE" ];
+then
+  export DTC_CCACHE=ON;
+else
+  export DTC_CCACHE=OFF;
+fi;
+
+show_help() {
+  echo "Usage: `basename $0` [4.0/5.0/6.0/7.0] [opt] [lld/thinlto]"
+  echo ""
+  echo "Example: `basename $0` 7.0 opt thinlto"
+  echo "Example2: `basename $0` 7.0 lld"
+  echo ""
+  echo "Commands:"
+  echo "-h  Show this menu."
+  echo ""
+  echo "--help  Also shows this menu."
+  echo ""
+  echo "opt  Builds using -march=native -mtune=native."
+  echo "     Building with this makes it for your system only."
+  echo ""
+  echo "lld  Builds using lld as the linker. This enables clang as host toolchain."
+  echo ""
+  echo "thinlto  Enables thinlto during the build. This enables clang as host toolchain."
+  echo "         It also enables lld as the linker and increases build time."
+  echo ""
+  echo "To enable ccache export DTC_USE_CCACHE=1 before running the script."
+  echo ""
+  exit 0
+}
+
+setup_dtc_build() {
+  # Find source root
+  export TOOLCHAIN_ROOT="$(dirname "$(pwd)")"
+
+  # Set remote url and sync
+  export REMOTE_URL="https://github.com/dragon-tc-tmp"
+  $TOOLCHAIN_ROOT/build/bin/common sync;
+
+  # Clean tree
+  if [ -d $TOOLCHAIN_ROOT/cmake ];
+  then
+    $TOOLCHAIN_ROOT/build/bin/common clean;
+  fi;
+
+  # Compile DragonTC LLVM/Clang
+  $TOOLCHAIN_ROOT/build/bin/common build;
+}
+
+# Detect version and setup
+if [ "$1" == "4.0" ]; then
+  export BRANCH="release_40"
+  export DTC_VERSION="4.0";
+  export DTC_LIB_VERSION="4.0.0";
+elif [ "$1" == "5.0" ]; then
+  export BRANCH="release_50"
+  export DTC_VERSION="5.0";
+  export DTC_LIB_VERSION="5.0.1";
+elif [ "$1" == "6.0" ]; then
+  export BRANCH="release_60"
+  export DTC_VERSION="6.0";
+  export DTC_LIB_VERSION="6.0.1";
+elif [ "$1" == "7.0" ]; then
+  export BRANCH="release_70"
+  export DTC_VERSION="7.0";
+  export DTC_LIB_VERSION="7.0.0";
+elif [ "$1" == "-h" ]; then
+  show_help
+elif [ "$1" == "--help" ]; then
+  show_help
+else
+  show_help
+fi
+
+# Setup build options
+if [ "$2" == "opt" ]; then
+  export OPT="-march=native -mtune=native";
+elif [ "$2" == "lld" ]; then
+  export CC="clang";
+  export CXX="clang++";
+  export DTC_USE_LLD="ON";
+elif [ "$2" == "thinlto" ]; then
+  export CC="clang";
+  export CXX="clang++";
+  export DTC_USE_LLD="ON";
+  export DTC_USE_THINLTO="Thin";
+fi;
+
+if [ "$3" == "lld" ]; then
+  export CC="clang";
+  export CXX="clang++";
+  export DTC_USE_LLD="ON";
+elif [ "$3" == "thinlto" ]; then
+  export CC="clang";
+  export CXX="clang++";
+  export DTC_USE_LLD="ON";
+  export DTC_USE_THINLTO="Thin";
+fi;
+
+# Setup and build
+setup_dtc_build

@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# List of bins to delete
+BINS2REMOVE="
+bugpoint
+c-index-test
+clang-apply-replacements
+clang-change-namespace
+clang-check
+clang-cl
+clang-cpp
+clang-func-mapping
+clang-import-test
+clang-include-fixer
+clang-offload-bundler
+clang-query
+clang-refactor
+clang-rename
+clang-reorder-fields
+clangd
+dsymutil
+find-all-symbols
+llc
+lli
+llvm-bcanalyzer
+llvm-cat
+llvm-cfi-verify
+llvm-c-test
+llvm-cvtres
+llvm-cxxdump
+llvm-cxxfilt
+llvm-diff
+llvm-dlltool
+llvm-dwarfdump
+llvm-dwp
+llvm-exegesis
+llvm-extract
+llvm-lib
+llvm-lto
+llvm-lto2
+llvm-mc
+llvm-mca
+llvm-mt
+llvm-objdump
+llvm-opt-report
+llvm-pdbutil
+llvm-ranlib
+llvm-rc
+llvm-readelf
+llvm-rtdyld
+llvm-size
+llvm-split
+llvm-stress
+llvm-strings
+llvm-tblgen
+llvm-xray
+modularize
+obj2yaml
+opt
+verify-uselistorder
+wasm-ld
+yaml2obj
+"
+
+# Path to return to
+currentpath=$1
+
+# Path to dtc. Ex: /home/billybob/dtc/out/7.0
+toolchainpath=$2
+
+# Change to toolchain/bin
+cd $toolchainpath/bin
+
+# Remove all listed bins
+rm $BINS2REMOVE
+
+# Back to script path
+cd $currentpath
+

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# List of bins to strip
+BINS2STRIP="
+clang
+clang++
+clang-format
+clang-tidy
+ld.lld
+ld64.lld
+lld
+lld-link
+llvm-ar
+llvm-as
+llvm-config
+llvm-cov
+llvm-dis
+llvm-link
+llvm-modextract
+llvm-nm
+llvm-objcopy
+llvm-profdata
+llvm-readobj
+llvm-strip
+llvm-symbolizer
+sancov
+sanstats
+"
+
+# Path to return to
+currentpath=$1
+
+# Path to dtc. Ex: /home/billybob/dtc/out/7.0
+toolchainpath=$2
+
+# Clang version
+clangversionReal=$3
+
+# Change to toolchain/bin
+cd $toolchainpath/bin
+
+# Strip all but clang-x
+strip $BINS2STRIP
+
+# Strip clang-x
+if [ "$clangversionReal" == "4.0" ]; then
+  strip clang-4
+elif [ "$clangversionReal" == "5.0" ]; then
+  strip clang-5
+elif [ "$clangversionReal" == "6.0" ]; then
+  strip clang-6
+elif [ "$clangversionReal" == "7.0" ]; then
+  strip clang-7
+fi
+
+# Back to 
+cd $currentpath
+
