@@ -10,7 +10,9 @@
   __interceptor___libc_memalign;
   __interceptor___sigsetjmp;
   __interceptor___strndup;
+  __interceptor___strxfrm_l;
   __interceptor___wait4;
+  __interceptor___wcsxfrm_l;
   __interceptor__exit;
   __interceptor__setjmp;
   __interceptor_abort;
@@ -125,10 +127,10 @@
   __interceptor_mlock;
   __interceptor_mlockall;
   __interceptor_mmap;
-  __interceptor_mmap64;
   __interceptor_modf;
   __interceptor_modff;
   __interceptor_modfl;
+  __interceptor_mprotect;
   __interceptor_munlock;
   __interceptor_munlockall;
   __interceptor_munmap;
@@ -262,6 +264,8 @@
   __interceptor_strdup;
   __interceptor_strerror;
   __interceptor_strerror_r;
+  __interceptor_strlcat;
+  __interceptor_strlcpy;
   __interceptor_strlen;
   __interceptor_strncasecmp;
   __interceptor_strncmp;
@@ -276,6 +280,8 @@
   __interceptor_strtoimax;
   __interceptor_strtok;
   __interceptor_strtoumax;
+  __interceptor_strxfrm;
+  __interceptor_strxfrm_l;
   __interceptor_sysinfo;
   __interceptor_tempnam;
   __interceptor_time;
@@ -306,6 +312,8 @@
   __interceptor_wcsnlen;
   __interceptor_wcsrtombs;
   __interceptor_wcstombs;
+  __interceptor_wcsxfrm;
+  __interceptor_wcsxfrm_l;
   __interceptor_write;
   __interceptor_writev;
   __libc_memalign;
@@ -978,6 +986,7 @@
   __sanitizer_weak_hook_strstr;
   __sigsetjmp;
   __strndup;
+  __strxfrm_l;
   __tsan_acquire;
   __tsan_atomic*;
   __tsan_flush_memory;
@@ -1001,6 +1010,7 @@
   __tsan_write*;
   __ubsan_*;
   __wait4;
+  __wcsxfrm_l;
   _exit;
   _setjmp;
   abort;
@@ -1114,10 +1124,10 @@
   mlock;
   mlockall;
   mmap;
-  mmap64;
   modf;
   modff;
   modfl;
+  mprotect;
   munlock;
   munlockall;
   munmap;
@@ -1244,6 +1254,8 @@
   strdup;
   strerror;
   strerror_r;
+  strlcat;
+  strlcpy;
   strlen;
   strncasecmp;
   strncmp;
@@ -1258,6 +1270,8 @@
   strtoimax;
   strtok;
   strtoumax;
+  strxfrm;
+  strxfrm_l;
   sysinfo;
   tempnam;
   time;
@@ -1288,6 +1302,8 @@
   wcsnlen;
   wcsrtombs;
   wcstombs;
+  wcsxfrm;
+  wcsxfrm_l;
   write;
   writev;
 };

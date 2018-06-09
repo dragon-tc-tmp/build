@@ -171,6 +171,7 @@ LIBCLANG_RT_ASAN {
     ctime;
     ctime_r;
     __cxa_atexit;
+    __cxa_rethrow_primary_exception;
     __cxa_throw;
     ether_aton;
     ether_ntoa;
@@ -183,7 +184,6 @@ LIBCLANG_RT_ASAN {
     fgetxattr;
     flistxattr;
     fopen;
-    fork;
     fprintf;
     fread;
     free;
@@ -243,6 +243,7 @@ LIBCLANG_RT_ASAN {
     __interceptor_ctime;
     __interceptor_ctime_r;
     __interceptor___cxa_atexit;
+    __interceptor___cxa_rethrow_primary_exception;
     __interceptor___cxa_throw;
     __interceptor_ether_aton;
     __interceptor_ether_ntoa;
@@ -255,7 +256,6 @@ LIBCLANG_RT_ASAN {
     __interceptor_fgetxattr;
     __interceptor_flistxattr;
     __interceptor_fopen;
-    __interceptor_fork;
     __interceptor_fprintf;
     __interceptor_fread;
     __interceptor_free;
@@ -330,9 +330,11 @@ LIBCLANG_RT_ASAN {
     __interceptor_mktime;
     __interceptor_mlock;
     __interceptor_mlockall;
+    __interceptor_mmap;
     __interceptor_modf;
     __interceptor_modff;
     __interceptor_modfl;
+    __interceptor_mprotect;
     __interceptor_munlock;
     __interceptor_munlockall;
     __interceptor_opendir;
@@ -416,6 +418,8 @@ LIBCLANG_RT_ASAN {
     __interceptor_strdup;
     __interceptor_strerror;
     __interceptor_strerror_r;
+    __interceptor_strlcat;
+    __interceptor_strlcpy;
     __interceptor_strlen;
     __interceptor_strncasecmp;
     __interceptor_strncat;
@@ -434,12 +438,16 @@ LIBCLANG_RT_ASAN {
     __interceptor_strtol;
     __interceptor_strtoll;
     __interceptor_strtoumax;
+    __interceptor_strxfrm;
+    __interceptor___strxfrm_l;
+    __interceptor_strxfrm_l;
     __interceptor_sysinfo;
     __interceptor_tempnam;
     __interceptor_time;
     __interceptor_times;
     __interceptor_tmpnam;
     __interceptor_ttyname_r;
+    __interceptor__Unwind_RaiseException;
     __interceptor_valloc;
     __interceptor_vasprintf;
     __interceptor_vfprintf;
@@ -460,6 +468,9 @@ LIBCLANG_RT_ASAN {
     __interceptor_wcsnlen;
     __interceptor_wcsrtombs;
     __interceptor_wcstombs;
+    __interceptor_wcsxfrm;
+    __interceptor___wcsxfrm_l;
+    __interceptor_wcsxfrm_l;
     __interceptor_write;
     __interceptor_writev;
     ioctl;
@@ -502,9 +513,11 @@ LIBCLANG_RT_ASAN {
     mktime;
     mlock;
     mlockall;
+    mmap;
     modf;
     modff;
     modfl;
+    mprotect;
     munlock;
     munlockall;
     opendir;
@@ -1263,6 +1276,8 @@ LIBCLANG_RT_ASAN {
     strdup;
     strerror;
     strerror_r;
+    strlcat;
+    strlcpy;
     strlen;
     strncasecmp;
     strncat;
@@ -1281,6 +1296,9 @@ LIBCLANG_RT_ASAN {
     strtol;
     strtoll;
     strtoumax;
+    strxfrm;
+    __strxfrm_l;
+    strxfrm_l;
     sysinfo;
     tempnam;
     time;
@@ -1332,6 +1350,7 @@ LIBCLANG_RT_ASAN {
     __ubsan_handle_vla_bound_not_positive;
     __ubsan_handle_vla_bound_not_positive_abort;
     __ubsan_vptr_type_cache;
+    _Unwind_RaiseException;
     valloc;
     vasprintf;
     vfprintf;
@@ -1352,6 +1371,9 @@ LIBCLANG_RT_ASAN {
     wcsnlen;
     wcsrtombs;
     wcstombs;
+    wcsxfrm;
+    __wcsxfrm_l;
+    wcsxfrm_l;
     write;
     writev;
     _ZdaPv;

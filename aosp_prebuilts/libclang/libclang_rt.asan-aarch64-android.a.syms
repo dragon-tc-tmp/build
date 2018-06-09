@@ -1,12 +1,18 @@
 {
+  _Unwind_RaiseException;
   __asan_*;
   __cxa_atexit;
+  __cxa_rethrow_primary_exception;
   __cxa_throw;
+  __interceptor__Unwind_RaiseException;
   __interceptor___cxa_atexit;
+  __interceptor___cxa_rethrow_primary_exception;
   __interceptor___cxa_throw;
   __interceptor___libc_memalign;
   __interceptor___strndup;
+  __interceptor___strxfrm_l;
   __interceptor___wait4;
+  __interceptor___wcsxfrm_l;
   __interceptor__exit;
   __interceptor__longjmp;
   __interceptor_accept;
@@ -36,7 +42,6 @@
   __interceptor_fgetxattr;
   __interceptor_flistxattr;
   __interceptor_fopen;
-  __interceptor_fork;
   __interceptor_fprintf;
   __interceptor_fread;
   __interceptor_free;
@@ -109,9 +114,11 @@
   __interceptor_mktime;
   __interceptor_mlock;
   __interceptor_mlockall;
+  __interceptor_mmap;
   __interceptor_modf;
   __interceptor_modff;
   __interceptor_modfl;
+  __interceptor_mprotect;
   __interceptor_munlock;
   __interceptor_munlockall;
   __interceptor_opendir;
@@ -195,6 +202,8 @@
   __interceptor_strdup;
   __interceptor_strerror;
   __interceptor_strerror_r;
+  __interceptor_strlcat;
+  __interceptor_strlcpy;
   __interceptor_strlen;
   __interceptor_strncasecmp;
   __interceptor_strncat;
@@ -212,6 +221,8 @@
   __interceptor_strtol;
   __interceptor_strtoll;
   __interceptor_strtoumax;
+  __interceptor_strxfrm;
+  __interceptor_strxfrm_l;
   __interceptor_sysinfo;
   __interceptor_tempnam;
   __interceptor_time;
@@ -237,6 +248,8 @@
   __interceptor_wcsnlen;
   __interceptor_wcsrtombs;
   __interceptor_wcstombs;
+  __interceptor_wcsxfrm;
+  __interceptor_wcsxfrm_l;
   __interceptor_write;
   __interceptor_writev;
   __libc_memalign;
@@ -917,8 +930,10 @@
   __sanitizer_weak_hook_strncmp;
   __sanitizer_weak_hook_strstr;
   __strndup;
+  __strxfrm_l;
   __ubsan_*;
   __wait4;
+  __wcsxfrm_l;
   _exit;
   _longjmp;
   accept;
@@ -948,7 +963,6 @@
   fgetxattr;
   flistxattr;
   fopen;
-  fork;
   fprintf;
   fread;
   free;
@@ -1020,9 +1034,11 @@
   mktime;
   mlock;
   mlockall;
+  mmap;
   modf;
   modff;
   modfl;
+  mprotect;
   munlock;
   munlockall;
   opendir;
@@ -1105,6 +1121,8 @@
   strdup;
   strerror;
   strerror_r;
+  strlcat;
+  strlcpy;
   strlen;
   strncasecmp;
   strncat;
@@ -1122,6 +1140,8 @@
   strtol;
   strtoll;
   strtoumax;
+  strxfrm;
+  strxfrm_l;
   sysinfo;
   tempnam;
   time;
@@ -1147,6 +1167,8 @@
   wcsnlen;
   wcsrtombs;
   wcstombs;
+  wcsxfrm;
+  wcsxfrm_l;
   write;
   writev;
 };
