@@ -91,6 +91,9 @@ finalize() {
   # Copy libfuzzer headers
   cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/prebuilt_include $PREFIX_PATH/prebuilt_include;
 
+  # Copy Android tests
+  cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/test $PREFIX_PATH/test;
+
   whereami=$PWD
   $TOOLCHAIN_ROOT/build/bin/cleanbinaries $whereami $PREFIX_PATH
   $TOOLCHAIN_ROOT/build/bin/stripbinaries $whereami $PREFIX_PATH $DTC_VERSION
