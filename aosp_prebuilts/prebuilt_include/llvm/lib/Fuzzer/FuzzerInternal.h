@@ -12,7 +12,6 @@
 #ifndef LLVM_FUZZER_INTERNAL_H
 #define LLVM_FUZZER_INTERNAL_H
 
-#include "FuzzerDataFlowTrace.h"
 #include "FuzzerDefs.h"
 #include "FuzzerExtFunctions.h"
 #include "FuzzerInterface.h"
@@ -67,7 +66,6 @@ public:
   static void StaticGracefulExitCallback();
 
   void ExecuteCallback(const uint8_t *Data, size_t Size);
-  void CheckForUnstableCounters(const uint8_t *Data, size_t Size);
   bool RunOne(const uint8_t *Data, size_t Size, bool MayDeleteFile = false,
               InputInfo *II = nullptr, bool *FoundUniqFeatures = nullptr);
 
@@ -118,6 +116,7 @@ private:
   uint8_t *CurrentUnitData = nullptr;
   std::atomic<size_t> CurrentUnitSize;
   uint8_t BaseSha1[kSHA1NumBytes];  // Checksum of the base unit.
+  bool RunningCB = false;
 
   bool GracefulExitRequested = false;
 
@@ -135,7 +134,6 @@ private:
   InputCorpus &Corpus;
   MutationDispatcher &MD;
   FuzzingOptions Options;
-  DataFlowTrace DFT;
 
   system_clock::time_point ProcessStartTime = system_clock::now();
   system_clock::time_point UnitStartTime, UnitStopTime;
@@ -150,28 +148,6 @@ private:
 
   // Need to know our own thread.
   static thread_local bool IsMyThread;
-};
-
-struct ScopedEnableMsanInterceptorChecks {
-  ScopedEnableMsanInterceptorChecks() {
-    if (EF->__msan_scoped_enable_interceptor_checks)
-      EF->__msan_scoped_enable_interceptor_checks();
-  }
-  ~ScopedEnableMsanInterceptorChecks() {
-    if (EF->__msan_scoped_disable_interceptor_checks)
-      EF->__msan_scoped_disable_interceptor_checks();
-  }
-};
-
-struct ScopedDisableMsanInterceptorChecks {
-  ScopedDisableMsanInterceptorChecks() {
-    if (EF->__msan_scoped_disable_interceptor_checks)
-      EF->__msan_scoped_disable_interceptor_checks();
-  }
-  ~ScopedDisableMsanInterceptorChecks() {
-    if (EF->__msan_scoped_enable_interceptor_checks)
-      EF->__msan_scoped_enable_interceptor_checks();
-  }
 };
 
 } // namespace fuzzer

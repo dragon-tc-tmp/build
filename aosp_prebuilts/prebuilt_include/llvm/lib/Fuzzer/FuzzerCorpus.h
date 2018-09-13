@@ -12,7 +12,6 @@
 #ifndef LLVM_FUZZER_CORPUS
 #define LLVM_FUZZER_CORPUS
 
-#include "FuzzerDataFlowTrace.h"
 #include "FuzzerDefs.h"
 #include "FuzzerIO.h"
 #include "FuzzerRandom.h"
@@ -38,7 +37,7 @@ struct InputInfo {
   bool Reduced = false;
   bool HasFocusFunction = false;
   Vector<uint32_t> UniqFeatureSet;
-  Vector<uint8_t> DataFlowTraceForFocusFunction;
+  float FeatureFrequencyScore = 1.0;
 };
 
 class InputCorpus {
@@ -47,6 +46,7 @@ class InputCorpus {
   InputCorpus(const std::string &OutputCorpus) : OutputCorpus(OutputCorpus) {
     memset(InputSizesPerFeature, 0, sizeof(InputSizesPerFeature));
     memset(SmallestElementPerFeature, 0, sizeof(SmallestElementPerFeature));
+    memset(FeatureFrequency, 0, sizeof(FeatureFrequency));
   }
   ~InputCorpus() {
     for (auto II : Inputs)
@@ -78,17 +78,10 @@ class InputCorpus {
     });
   }
 
-  size_t NumInputsWithDataFlowTrace() {
-    return std::count_if(Inputs.begin(), Inputs.end(), [](const InputInfo *II) {
-      return !II->DataFlowTraceForFocusFunction.empty();
-    });
-  }
-
   bool empty() const { return Inputs.empty(); }
   const Unit &operator[] (size_t Idx) const { return Inputs[Idx]->U; }
   void AddToCorpus(const Unit &U, size_t NumFeatures, bool MayDeleteFile,
-                   bool HasFocusFunction, const Vector<uint32_t> &FeatureSet,
-                   const DataFlowTrace &DFT, const InputInfo *BaseII) {
+                   bool HasFocusFunction, const Vector<uint32_t> &FeatureSet) {
     assert(!U.empty());
     if (FeatureDebug)
       Printf("ADD_TO_CORPUS %zd NF %zd\n", Inputs.size(), NumFeatures);
@@ -101,16 +94,7 @@ class InputCorpus {
     II.HasFocusFunction = HasFocusFunction;
     std::sort(II.UniqFeatureSet.begin(), II.UniqFeatureSet.end());
     ComputeSHA1(U.data(), U.size(), II.Sha1);
-    auto Sha1Str = Sha1ToString(II.Sha1);
-    Hashes.insert(Sha1Str);
-    if (HasFocusFunction)
-      if (auto V = DFT.Get(Sha1Str))
-        II.DataFlowTraceForFocusFunction = *V;
-    // This is a gross heuristic.
-    // Ideally, when we add an element to a corpus we need to know its DFT.
-    // But if we don't, we'll use the DFT of its base input.
-    if (II.DataFlowTraceForFocusFunction.empty() && BaseII)
-      II.DataFlowTraceForFocusFunction = BaseII->DataFlowTraceForFocusFunction;
+    Hashes.insert(Sha1ToString(II.Sha1));
     UpdateCorpusDistribution();
     PrintCorpus();
     // ValidateFeatureSet();
@@ -238,10 +222,18 @@ class InputCorpus {
     return false;
   }
 
-  bool IsFeatureNew(size_t Idx, uint32_t NewSize, bool Shrink) {
-    assert(NewSize);
-    uint32_t OldSize = GetFeature(Idx % kFeatureSetSize);
-    return OldSize == 0 || (Shrink && OldSize > NewSize);
+  void UpdateFeatureFrequency(size_t Idx) {
+    FeatureFrequency[Idx % kFeatureSetSize]++;
+  }
+  float GetFeatureFrequency(size_t Idx) const {
+    return FeatureFrequency[Idx % kFeatureSetSize];
+  }
+  void UpdateFeatureFrequencyScore(InputInfo *II) {
+    const float kMin = 0.01, kMax = 100.;
+    II->FeatureFrequencyScore = kMin;
+    for (auto Idx : II->UniqFeatureSet)
+      II->FeatureFrequencyScore += 1. / (GetFeatureFrequency(Idx) + 1.);
+    II->FeatureFrequencyScore = Min(II->FeatureFrequencyScore, kMax);
   }
 
   size_t NumFeatures() const { return NumAddedFeatures; }
@@ -281,11 +273,15 @@ private:
     std::iota(Intervals.begin(), Intervals.end(), 0);
     for (size_t i = 0; i < N; i++)
       Weights[i] = Inputs[i]->NumFeatures
-                       ? (i + 1) * (Inputs[i]->HasFocusFunction ? 1000 : 1)
+                       ? (i + 1) * Inputs[i]->FeatureFrequencyScore
+                       * (Inputs[i]->HasFocusFunction ? 1000 : 1)
                        : 0.;
     if (FeatureDebug) {
       for (size_t i = 0; i < N; i++)
         Printf("%zd ", Inputs[i]->NumFeatures);
+      Printf("NUM\n");
+      for (size_t i = 0; i < N; i++)
+        Printf("%f ", Inputs[i]->FeatureFrequencyScore);
       Printf("SCORE\n");
       for (size_t i = 0; i < N; i++)
         Printf("%f ", Weights[i]);
@@ -306,6 +302,7 @@ private:
   size_t NumUpdatedFeatures = 0;
   uint32_t InputSizesPerFeature[kFeatureSetSize];
   uint32_t SmallestElementPerFeature[kFeatureSetSize];
+  float FeatureFrequency[kFeatureSetSize];
 
   std::string OutputCorpus;
 };

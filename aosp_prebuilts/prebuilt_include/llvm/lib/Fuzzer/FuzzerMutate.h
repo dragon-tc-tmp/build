@@ -70,13 +70,6 @@ public:
   /// Applies one of the configured mutations.
   /// Returns the new size of data which could be up to MaxSize.
   size_t Mutate(uint8_t *Data, size_t Size, size_t MaxSize);
-
-  /// Applies one of the configured mutations to the bytes of Data
-  /// that have '1' in Mask.
-  /// Mask.size() should be >= Size.
-  size_t MutateWithMask(uint8_t *Data, size_t Size, size_t MaxSize,
-                        const Vector<uint8_t> &Mask);
-
   /// Applies one of the default mutations. Provided as a service
   /// to mutation authors.
   size_t DefaultMutate(uint8_t *Data, size_t Size, size_t MaxSize);
@@ -93,7 +86,8 @@ public:
 
   Random &GetRand() { return Rand; }
 
- private:
+private:
+
   struct Mutator {
     size_t (MutationDispatcher::*Fn)(uint8_t *Data, size_t Size, size_t Max);
     const char *Name;
@@ -134,6 +128,7 @@ public:
   // entries that led to successful discoveries in the past mutations.
   Dictionary PersistentAutoDictionary;
 
+  Vector<Mutator> CurrentMutatorSequence;
   Vector<DictionaryEntry *> CurrentDictionaryEntrySequence;
 
   static const size_t kCmpDictionaryEntriesDequeSize = 16;
@@ -142,14 +137,12 @@ public:
 
   const InputCorpus *Corpus = nullptr;
   Vector<uint8_t> MutateInPlaceHere;
-  Vector<uint8_t> MutateWithMaskTemp;
   // CustomCrossOver needs its own buffer as a custom implementation may call
   // LLVMFuzzerMutate, which in turn may resize MutateInPlaceHere.
   Vector<uint8_t> CustomCrossOverInPlaceHere;
 
   Vector<Mutator> Mutators;
   Vector<Mutator> DefaultMutators;
-  Vector<Mutator> CurrentMutatorSequence;
 };
 
 }  // namespace fuzzer

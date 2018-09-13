@@ -17,7 +17,6 @@
 #include "FuzzerValueBitMap.h"
 
 #include <set>
-#include <unordered_map>
 
 namespace fuzzer {
 
@@ -74,11 +73,6 @@ class TracePC {
   // How many bits of PC are used from __sanitizer_cov_trace_pc.
   static const size_t kTracePcBits = 18;
 
-  enum HandleUnstableOptions {
-    MinUnstable = 1,
-    ZeroUnstable = 2,
-  };
-
   void HandleInit(uint32_t *Start, uint32_t *Stop);
   void HandleInline8bitCountersInit(uint8_t *Start, uint8_t *Stop);
   void HandlePCsInit(const uintptr_t *Start, const uintptr_t *Stop);
@@ -86,7 +80,7 @@ class TracePC {
   template <class T> void HandleCmp(uintptr_t PC, T Arg1, T Arg2);
   size_t GetTotalPCCoverage();
   void SetUseCounters(bool UC) { UseCounters = UC; }
-  void SetUseValueProfileMask(uint32_t VPMask) { UseValueProfileMask = VPMask; }
+  void SetUseValueProfile(bool VP) { UseValueProfile = VP; }
   void SetPrintNewPCs(bool P) { DoPrintNewPCs = P; }
   void SetPrintNewFuncs(size_t P) { NumPrintNewFuncs = P; }
   void UpdateObservedPCs();
@@ -109,7 +103,6 @@ class TracePC {
 
   void PrintCoverage();
   void DumpCoverage();
-  void PrintUnstableStats();
 
   template<class CallBack>
   void IterateCoveredFunctions(CallBack CB);
@@ -142,20 +135,9 @@ class TracePC {
   void SetFocusFunction(const std::string &FuncName);
   bool ObservedFocusFunction();
 
-  void InitializeUnstableCounters();
-  bool UpdateUnstableCounters(int UnstableMode);
-  void UpdateAndApplyUnstableCounters(int UnstableMode);
-
 private:
-  struct UnstableEdge {
-    uint8_t Counter;
-    bool IsUnstable;
-  };
-
-  UnstableEdge UnstableCounters[kNumPCs];
-
   bool UseCounters = false;
-  uint32_t UseValueProfileMask = false;
+  bool UseValueProfile = false;
   bool DoPrintNewPCs = false;
   size_t NumPrintNewFuncs = 0;
 
@@ -183,12 +165,10 @@ private:
   uintptr_t *PCs() const;
 
   Set<uintptr_t> ObservedPCs;
-  std::unordered_map<uintptr_t, uintptr_t> ObservedFuncs;  // PC => Counter.
-
-  template <class Callback>
-  void IterateInline8bitCounters(Callback CB) const;
+  Set<uintptr_t> ObservedFuncs;
 
   std::pair<size_t, size_t> FocusFunction = {-1, -1};  // Module and PC IDs.
+
 
   ValueBitMap ValueProfileMap;
   uintptr_t InitialStack;
@@ -280,7 +260,7 @@ void TracePC::CollectFeatures(Callback HandleFeature) const {
                      Handle8bitCounter);
   FirstFeature += (ExtraCountersEnd() - ExtraCountersBegin()) * 8;
 
-  if (UseValueProfileMask) {
+  if (UseValueProfile) {
     ValueProfileMap.ForEach([&](size_t Idx) {
       HandleFeature(FirstFeature + Idx);
     });
