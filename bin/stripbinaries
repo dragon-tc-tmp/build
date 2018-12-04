@@ -4,6 +4,7 @@
 BINS2STRIP="
 clang
 clang++
+clang-check
 clang-format
 clang-tidy
 ld.lld

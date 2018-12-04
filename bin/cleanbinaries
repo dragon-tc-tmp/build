@@ -6,7 +6,6 @@ bugpoint
 c-index-test
 clang-apply-replacements
 clang-change-namespace
-clang-check
 clang-cl
 clang-cpp
 clang-func-mapping
