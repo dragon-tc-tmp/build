@@ -90,6 +90,9 @@ finalize() {
   cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/runtimes_ndk_cxx $PREFIX_PATH/runtimes_ndk_cxx;
   # Copy stdatomic from bionic
   cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/$DTC_LIB_VERSION/include/stdatomic.h;
+  # Remove unneeded static libs
+  rm $PREFIX_PATH/lib64/**.a
+
   cd $TOOLCHAIN_ROOT/out/$DTC_VERSION/lib64/clang; ln -s $DTC_LIB_VERSION $DTC_VERSION; cd $TOOLCHAIN_ROOT/build
 
   whereami=$PWD
