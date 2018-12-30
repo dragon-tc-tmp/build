@@ -77,6 +77,7 @@ clean() {
 }
 
 finalize() {
+  # Add VERSION file
   current_date=$(date "+%Y%m%d");
   echo "$DTC_VERSION-DragonTC-$current_date" >> $PREFIX_PATH/VERSION;
 
@@ -88,8 +89,6 @@ finalize() {
   cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/test $PREFIX_PATH/test;
   # Copy libfuzzer headers
   cp -R $TOOLCHAIN_ROOT/build/aosp_prebuilts/runtimes_ndk_cxx $PREFIX_PATH/runtimes_ndk_cxx;
-  # Copy stdatomic from bionic
-  cp $TOOLCHAIN_ROOT/build/aosp_prebuilts/stdatomic.h $PREFIX_PATH/lib64/clang/$DTC_LIB_VERSION/include/stdatomic.h;
   # Remove unneeded static libs
   rm $PREFIX_PATH/lib64/**.a
 
