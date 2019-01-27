@@ -13,6 +13,7 @@ lld
 lld-link
 llvm-ar
 llvm-as
+llvm-cfi-verify
 llvm-config
 llvm-cov
 llvm-dis
@@ -20,6 +21,7 @@ llvm-link
 llvm-modextract
 llvm-nm
 llvm-objcopy
+llvm-objdump
 llvm-profdata
 llvm-readobj
 llvm-strip
