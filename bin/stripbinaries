@@ -54,6 +54,8 @@ elif [ "$clangversionReal" == "7.0" ]; then
   strip clang-7
 elif [ "$clangversionReal" == "8.0" ]; then
   strip clang-8
+elif [ "$clangversionReal" == "9.0" ]; then
+  strip clang-9
 fi
 
 # Back to 

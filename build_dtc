@@ -12,7 +12,7 @@ else
 fi;
 
 show_help() {
-  echo "Usage: `basename $0` [4.0/5.0/6.0/7.0/8.0] [opt] [lld/thinlto]"
+  echo "Usage: `basename $0` [4.0/5.0/6.0/7.0/8.0/9.0] [opt] [lld/thinlto]"
   echo ""
   echo "Example: `basename $0` 8.0 opt thinlto"
   echo "Example2: `basename $0` 8.0 lld"
@@ -74,6 +74,10 @@ elif [ "$1" == "8.0" ]; then
   export BRANCH="release_80"
   export DTC_VERSION="8.0";
   export DTC_LIB_VERSION="8.0.0";
+elif [ "$1" == "9.0" ]; then
+  export BRANCH="release_90"
+  export DTC_VERSION="9.0";
+  export DTC_LIB_VERSION="9.0.0";
 elif [ "$1" == "-h" ]; then
   show_help
 elif [ "$1" == "--help" ]; then
