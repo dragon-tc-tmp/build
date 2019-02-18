@@ -124,7 +124,9 @@
   __interceptor_munlock;
   __interceptor_munlockall;
   __interceptor_opendir;
+  __interceptor_pclose;
   __interceptor_poll;
+  __interceptor_popen;
   __interceptor_posix_memalign;
   __interceptor_prctl;
   __interceptor_pread;
@@ -164,6 +166,10 @@
   __interceptor_recvfrom;
   __interceptor_recvmmsg;
   __interceptor_recvmsg;
+  __interceptor_regcomp;
+  __interceptor_regerror;
+  __interceptor_regexec;
+  __interceptor_regfree;
   __interceptor_remquo;
   __interceptor_remquof;
   __interceptor_remquol;
@@ -179,8 +185,12 @@
   __interceptor_sendmmsg;
   __interceptor_sendmsg;
   __interceptor_sendto;
+  __interceptor_setbuf;
+  __interceptor_setbuffer;
   __interceptor_setitimer;
+  __interceptor_setlinebuf;
   __interceptor_setlocale;
+  __interceptor_setvbuf;
   __interceptor_sigaction;
   __interceptor_siglongjmp;
   __interceptor_signal;
@@ -1048,7 +1058,9 @@
   munlock;
   munlockall;
   opendir;
+  pclose;
   poll;
+  popen;
   posix_memalign;
   prctl;
   pread;
@@ -1087,6 +1099,10 @@
   recvfrom;
   recvmmsg;
   recvmsg;
+  regcomp;
+  regerror;
+  regexec;
+  regfree;
   remquo;
   remquof;
   remquol;
@@ -1102,8 +1118,12 @@
   sendmmsg;
   sendmsg;
   sendto;
+  setbuf;
+  setbuffer;
   setitimer;
+  setlinebuf;
   setlocale;
+  setvbuf;
   sigaction;
   siglongjmp;
   signal;

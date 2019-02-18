@@ -124,6 +124,7 @@ LIBCLANG_RT_ASAN {
     __asan_set_shadow_f3;
     __asan_set_shadow_f5;
     __asan_set_shadow_f8;
+    __asan_shadow;
     __asan_shadow_memory_dynamic_address;
     __asan_stack_free_0;
     __asan_stack_free_1;
@@ -337,8 +338,8 @@ LIBCLANG_RT_ASAN {
     __interceptor_llistxattr;
     __interceptor_localtime;
     __interceptor_localtime_r;
-    __interceptor_longjmp;
     __interceptor__longjmp;
+    __interceptor_longjmp;
     __interceptor_mallinfo;
     __interceptor_malloc;
     __interceptor_malloc_stats;
@@ -366,7 +367,9 @@ LIBCLANG_RT_ASAN {
     __interceptor_munlock;
     __interceptor_munlockall;
     __interceptor_opendir;
+    __interceptor_pclose;
     __interceptor_poll;
+    __interceptor_popen;
     __interceptor_posix_memalign;
     __interceptor_prctl;
     __interceptor_pread;
@@ -406,6 +409,10 @@ LIBCLANG_RT_ASAN {
     __interceptor_recvfrom;
     __interceptor_recvmmsg;
     __interceptor_recvmsg;
+    __interceptor_regcomp;
+    __interceptor_regerror;
+    __interceptor_regexec;
+    __interceptor_regfree;
     __interceptor_remquo;
     __interceptor_remquof;
     __interceptor_remquol;
@@ -421,8 +428,12 @@ LIBCLANG_RT_ASAN {
     __interceptor_sendmmsg;
     __interceptor_sendmsg;
     __interceptor_sendto;
+    __interceptor_setbuf;
+    __interceptor_setbuffer;
     __interceptor_setitimer;
+    __interceptor_setlinebuf;
     __interceptor_setlocale;
+    __interceptor_setvbuf;
     __interceptor_sigaction;
     __interceptor_siglongjmp;
     __interceptor_signal;
@@ -454,8 +465,8 @@ LIBCLANG_RT_ASAN {
     __interceptor_strncat;
     __interceptor_strncmp;
     __interceptor_strncpy;
-    __interceptor_strndup;
     __interceptor___strndup;
+    __interceptor_strndup;
     __interceptor_strnlen;
     __interceptor_strpbrk;
     __interceptor_strptime;
@@ -514,8 +525,8 @@ LIBCLANG_RT_ASAN {
     llistxattr;
     localtime;
     localtime_r;
-    longjmp;
     _longjmp;
+    longjmp;
     __lsan_disable;
     __lsan_do_leak_check;
     __lsan_do_recoverable_leak_check;
@@ -550,7 +561,9 @@ LIBCLANG_RT_ASAN {
     munlock;
     munlockall;
     opendir;
+    pclose;
     poll;
+    popen;
     posix_memalign;
     prctl;
     pread;
@@ -590,6 +603,10 @@ LIBCLANG_RT_ASAN {
     recvfrom;
     recvmmsg;
     recvmsg;
+    regcomp;
+    regerror;
+    regexec;
+    regfree;
     remquo;
     remquof;
     remquol;
@@ -1319,8 +1336,12 @@ LIBCLANG_RT_ASAN {
     sendmmsg;
     sendmsg;
     sendto;
+    setbuf;
+    setbuffer;
     setitimer;
+    setlinebuf;
     setlocale;
+    setvbuf;
     sigaction;
     siglongjmp;
     signal;
@@ -1352,8 +1373,8 @@ LIBCLANG_RT_ASAN {
     strncat;
     strncmp;
     strncpy;
-    strndup;
     __strndup;
+    strndup;
     strnlen;
     strpbrk;
     strptime;
@@ -1378,6 +1399,8 @@ LIBCLANG_RT_ASAN {
     __ubsan_get_current_report_data;
     __ubsan_handle_add_overflow;
     __ubsan_handle_add_overflow_abort;
+    __ubsan_handle_alignment_assumption;
+    __ubsan_handle_alignment_assumption_abort;
     __ubsan_handle_builtin_unreachable;
     __ubsan_handle_cfi_bad_type;
     __ubsan_handle_cfi_check_fail;

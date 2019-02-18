@@ -71,6 +71,8 @@
   __interceptor_fwrite;
   __interceptor_getaddrinfo;
   __interceptor_getcwd;
+  __interceptor_getgrgid;
+  __interceptor_getgrnam;
   __interceptor_getgroups;
   __interceptor_gethostbyaddr;
   __interceptor_gethostbyname;
@@ -81,6 +83,8 @@
   __interceptor_getmntent;
   __interceptor_getnameinfo;
   __interceptor_getpeername;
+  __interceptor_getpwnam;
+  __interceptor_getpwuid;
   __interceptor_getresgid;
   __interceptor_getresuid;
   __interceptor_getsockname;
@@ -142,9 +146,11 @@
   __interceptor_open64;
   __interceptor_opendir;
   __interceptor_pause;
+  __interceptor_pclose;
   __interceptor_pipe;
   __interceptor_pipe2;
   __interceptor_poll;
+  __interceptor_popen;
   __interceptor_posix_memalign;
   __interceptor_prctl;
   __interceptor_pread;
@@ -170,6 +176,7 @@
   __interceptor_pthread_condattr_getpshared;
   __interceptor_pthread_create;
   __interceptor_pthread_detach;
+  __interceptor_pthread_exit;
   __interceptor_pthread_getschedparam;
   __interceptor_pthread_join;
   __interceptor_pthread_kill;
@@ -200,6 +207,8 @@
   __interceptor_pthread_spin_lock;
   __interceptor_pthread_spin_trylock;
   __interceptor_pthread_spin_unlock;
+  __interceptor_pthread_timedjoin_np;
+  __interceptor_pthread_tryjoin_np;
   __interceptor_puts;
   __interceptor_pvalloc;
   __interceptor_pwrite;
@@ -216,6 +225,10 @@
   __interceptor_recvfrom;
   __interceptor_recvmmsg;
   __interceptor_recvmsg;
+  __interceptor_regcomp;
+  __interceptor_regerror;
+  __interceptor_regexec;
+  __interceptor_regfree;
   __interceptor_remquo;
   __interceptor_remquof;
   __interceptor_remquol;
@@ -232,9 +245,13 @@
   __interceptor_sendmmsg;
   __interceptor_sendmsg;
   __interceptor_sendto;
+  __interceptor_setbuf;
+  __interceptor_setbuffer;
   __interceptor_setitimer;
   __interceptor_setjmp;
+  __interceptor_setlinebuf;
   __interceptor_setlocale;
+  __interceptor_setvbuf;
   __interceptor_sigaction;
   __interceptor_sigblock;
   __interceptor_siglongjmp;
@@ -1072,6 +1089,8 @@
   fwrite;
   getaddrinfo;
   getcwd;
+  getgrgid;
+  getgrnam;
   getgroups;
   gethostbyaddr;
   gethostbyname;
@@ -1082,6 +1101,8 @@
   getmntent;
   getnameinfo;
   getpeername;
+  getpwnam;
+  getpwuid;
   getresgid;
   getresuid;
   getsockname;
@@ -1142,9 +1163,11 @@
   open64;
   opendir;
   pause;
+  pclose;
   pipe;
   pipe2;
   poll;
+  popen;
   posix_memalign;
   prctl;
   pread;
@@ -1164,6 +1187,7 @@
   pthread_condattr_getpshared;
   pthread_create;
   pthread_detach;
+  pthread_exit;
   pthread_getschedparam;
   pthread_join;
   pthread_kill;
@@ -1194,6 +1218,8 @@
   pthread_spin_lock;
   pthread_spin_trylock;
   pthread_spin_unlock;
+  pthread_timedjoin_np;
+  pthread_tryjoin_np;
   puts;
   pvalloc;
   pwrite;
@@ -1209,6 +1235,10 @@
   recvfrom;
   recvmmsg;
   recvmsg;
+  regcomp;
+  regerror;
+  regexec;
+  regfree;
   remquo;
   remquof;
   remquol;
@@ -1225,9 +1255,13 @@
   sendmmsg;
   sendmsg;
   sendto;
+  setbuf;
+  setbuffer;
   setitimer;
   setjmp;
+  setlinebuf;
   setlocale;
+  setvbuf;
   sigaction;
   sigblock;
   siglongjmp;

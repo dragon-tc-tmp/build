@@ -7,6 +7,8 @@ LIBCLANG_RT_ASAN {
     __hwasan_generate_tag;
     __hwasan_handle_longjmp;
     __hwasan_init;
+    __hwasan_init_frames;
+    __hwasan_init_static;
     __hwasan_load1;
     __hwasan_load16;
     __hwasan_load16_noabort;
@@ -19,9 +21,12 @@ LIBCLANG_RT_ASAN {
     __hwasan_load8_noabort;
     __hwasan_loadN;
     __hwasan_loadN_noabort;
+    __hwasan_memcpy;
+    __hwasan_memmove;
+    __hwasan_memset;
     __hwasan_print_memory_usage;
     __hwasan_print_shadow;
-    __hwasan_shadow_init;
+    __hwasan_shadow;
     __hwasan_shadow_memory_dynamic_address;
     __hwasan_store1;
     __hwasan_store16;
@@ -36,6 +41,7 @@ LIBCLANG_RT_ASAN {
     __hwasan_storeN;
     __hwasan_storeN_noabort;
     __hwasan_tag_memory;
+    __hwasan_tag_mismatch;
     __hwasan_tag_pointer;
     __hwasan_test_shadow;
     __hwasan_thread_enter;
@@ -106,11 +112,16 @@ LIBCLANG_RT_ASAN {
     __ubsan_get_current_report_data;
     __ubsan_handle_add_overflow;
     __ubsan_handle_add_overflow_abort;
+    __ubsan_handle_alignment_assumption;
+    __ubsan_handle_alignment_assumption_abort;
     __ubsan_handle_builtin_unreachable;
+    __ubsan_handle_cfi_bad_type;
     __ubsan_handle_cfi_check_fail;
     __ubsan_handle_cfi_check_fail_abort;
     __ubsan_handle_divrem_overflow;
     __ubsan_handle_divrem_overflow_abort;
+    __ubsan_handle_dynamic_type_cache_miss;
+    __ubsan_handle_dynamic_type_cache_miss_abort;
     __ubsan_handle_float_cast_overflow;
     __ubsan_handle_float_cast_overflow_abort;
     __ubsan_handle_function_type_mismatch;
@@ -147,6 +158,7 @@ LIBCLANG_RT_ASAN {
     __ubsan_handle_vla_bound_not_positive;
     __ubsan_handle_vla_bound_not_positive_abort;
     __ubsan_on_report;
+    __ubsan_vptr_type_cache;
     _ZdaPv;
     _ZdaPvRKSt9nothrow_t;
     _ZdlPv;
