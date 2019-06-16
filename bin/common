@@ -49,21 +49,6 @@ JOBS=$(bc <<< "$CPUS+2");
 # Set Prefix Path
 PREFIX_PATH=$TOOLCHAIN_ROOT/out/$DTC_VERSION
 
-sync() {
-  cd $TOOLCHAIN_ROOT/llvm && git reset --hard && git fetch $REMOTE_URL/llvm.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/tools/clang && rm -rf * && git reset --hard && git fetch $REMOTE_URL/clang.git $BRANCH && git checkout FETCH_HEAD;
-  rm -rf $TOOLCHAIN_ROOT/llvm/tools/clang/tools/extra
-  git clone $REMOTE_URL/clang-tools-extra.git -b $BRANCH $TOOLCHAIN_ROOT/llvm/tools/clang/tools/extra
-  cd $TOOLCHAIN_ROOT/llvm/tools/clang/tools/extra && rm -rf * && git reset --hard && git fetch $REMOTE_URL/clang-tools-extra.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/tools/lld && rm -rf * && git reset --hard && git fetch $REMOTE_URL/lld.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/tools/polly && rm -rf * && git reset --hard && git fetch $REMOTE_URL/polly.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/projects/compiler-rt && rm -rf * && git reset --hard && git fetch $REMOTE_URL/compiler-rt.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/projects/libcxxabi && rm -rf * && git reset --hard && git fetch $REMOTE_URL/libcxxabi.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/projects/libcxx && rm -rf * && git reset --hard && git fetch $REMOTE_URL/libcxx.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/projects/libunwind && rm -rf * && git reset --hard && git fetch $REMOTE_URL/libunwind.git $BRANCH && git checkout FETCH_HEAD;
-  cd $TOOLCHAIN_ROOT/llvm/projects/openmp && rm -rf * && git reset --hard && git fetch $REMOTE_URL/openmp.git $BRANCH && git checkout FETCH_HEAD;
-}
-
 clean() {
   if [ -d $TOOLCHAIN_ROOT/cmake ]; then
     rm -rf $TOOLCHAIN_ROOT/cmake;
@@ -117,7 +102,7 @@ build() {
   cd $TOOLCHAIN_ROOT/cmake;
   export LLVM_ENABLE_ABI_BREAKING_CHECKS=0
 
-  cmake -DLINK_POLLY_INTO_TOOLS:BOOL=ON -DCMAKE_CXX_FLAGS:STRING="$COMMON_CXX_FLAGS" -DCMAKE_C_FLAGS:STRING="$COMMON_C_FLAGS" -DLLVM_ENABLE_PIC:BOOL=ON -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX_PATH -DLLVM_PARALLEL_COMPILE_JOBS=$JOBS -DLLVM_PARALLEL_LINK_JOBS=$JOBS -DLLVM_ENABLE_THREADS:BOOL=ON -DLLVM_ENABLE_WARNINGS:BOOL=OFF -DLLVM_ENABLE_WERROR:BOOL=OFF -DLLVM_BUILD_DOCS:BOOL=OFF -DLLVM_BUILD_DOXYGEN:BOOL=OFF -DLLVM_INCLUDE_EXAMPLES:BOOL=OFF -DCOMPILER_RT_BUILD_XRAY:BOOL=OFF -DLLVM_INCLUDE_TESTS:BOOL=OFF -DLLVM_BINUTILS_INCDIR:PATH=$TOOLCHAIN_ROOT/llvm/tools/binutils/include -DLLVM_TARGETS_TO_BUILD:STRING="AArch64;ARM;BPF;X86" -DCMAKE_BUILD_TYPE:STRING=Release -DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON -DLLVM_ENABLE_TERMINFO:BOOL=OFF -DLLVM_LIBDIR_SUFFIX:STRING=64 -DLLVM_ENABLE_LLD:BOOL=$DTC_USE_LLD -DLLVM_ENABLE_LTO:STRING=$DTC_USE_THINLTO -DLLVM_CCACHE_BUILD:BOOL=$DTC_CCACHE -DCLANG_VENDOR:STRING=DragonTC -DCLANG_TC_DATE:STRING="$revision_date" -DCLANG_REPOSITORY_STRING:STRING="https://github.com/dragon-tc/clang" -DLLVM_REPOSITORY_STRING:STRING="https://github.com/dragon-tc/llvm" -DCOMPILER_RT_FUZZER_LINK_LIBCXX:BOOL=OFF $TOOLCHAIN_ROOT/llvm;
+  cmake -DLLVM_BUILD_RUNTIME:BOOL=ON -DLLVM_ENABLE_PROJECTS:STRING="clang;clang-tools-extra;compiler-rt;lld;libcxxabi;libcxx;openmp;polly" -DLLVM_TOOL_OPENMP_BUILD:BOOL=ON -DLINK_POLLY_INTO_TOOLS:BOOL=ON -DCMAKE_CXX_FLAGS:STRING="$COMMON_CXX_FLAGS" -DCMAKE_C_FLAGS:STRING="$COMMON_C_FLAGS" -DLLVM_ENABLE_PIC:BOOL=ON -DCMAKE_INSTALL_PREFIX:PATH=$PREFIX_PATH -DLLVM_PARALLEL_COMPILE_JOBS=$JOBS -DLLVM_PARALLEL_LINK_JOBS=$JOBS -DLLVM_ENABLE_THREADS:BOOL=ON -DLLVM_ENABLE_WARNINGS:BOOL=OFF -DLLVM_ENABLE_WERROR:BOOL=OFF -DLLVM_BUILD_DOCS:BOOL=OFF -DLLVM_BUILD_DOXYGEN:BOOL=OFF -DLLVM_INCLUDE_EXAMPLES:BOOL=OFF -DCOMPILER_RT_BUILD_XRAY:BOOL=OFF -DLLVM_INCLUDE_TESTS:BOOL=OFF -DLLVM_BINUTILS_INCDIR:PATH=$TOOLCHAIN_ROOT/llvm-project/llvm/tools/binutils/include -DLLVM_TARGETS_TO_BUILD:STRING="AArch64;ARM;BPF;X86" -DCMAKE_BUILD_TYPE:STRING=Release -DLLVM_OPTIMIZED_TABLEGEN:BOOL=ON -DLLVM_ENABLE_TERMINFO:BOOL=OFF -DLLVM_LIBDIR_SUFFIX:STRING=64 -DLLVM_ENABLE_LLD:BOOL=$DTC_USE_LLD -DLLVM_ENABLE_LTO:STRING=$DTC_USE_THINLTO -DLLVM_CCACHE_BUILD:BOOL=$DTC_CCACHE -DCLANG_VENDOR:STRING=DragonTC -DCLANG_TC_DATE:STRING="$revision_date" -DCLANG_REPOSITORY_STRING:STRING="https://github.com/dragon-tc/llvm-project" -DLLVM_REPOSITORY_STRING:STRING="https://github.com/dragon-tc/llvm-project" -DCOMPILER_RT_BUILD_LIBFUZZER:BOOL=ON -DCOMPILER_RT_FUZZER_LINK_LIBCXX:BOOL=OFF $TOOLCHAIN_ROOT/llvm-project/llvm;
 
   # Find Time Before Build
   START_TIME=$($DATE +%s);
