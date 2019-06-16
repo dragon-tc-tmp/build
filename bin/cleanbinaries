@@ -8,6 +8,8 @@ clang-apply-replacements
 clang-change-namespace
 clang-cl
 clang-cpp
+clang-doc
+clang-extdef-mapping
 clang-import-test
 clang-include-fixer
 clang-offload-bundler
@@ -16,7 +18,7 @@ clang-refactor
 clang-rename
 clang-reorder-fields
 clangd
-dsymutil
+diagtool
 find-all-symbols
 llc
 lli
@@ -32,7 +34,9 @@ llvm-dwarfdump
 llvm-dwp
 llvm-exegesis
 llvm-extract
+llvm-jitlink
 llvm-lib
+llvm-lipo
 llvm-lto
 llvm-lto2
 llvm-mc
@@ -40,15 +44,12 @@ llvm-mca
 llvm-mt
 llvm-opt-report
 llvm-pdbutil
-llvm-ranlib
 llvm-rc
-llvm-readelf
 llvm-rtdyld
-llvm-size
 llvm-split
 llvm-stress
-llvm-strings
 llvm-tblgen
+llvm-undname
 llvm-xray
 modularize
 obj2yaml

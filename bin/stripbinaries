@@ -7,10 +7,13 @@ clang++
 clang-check
 clang-format
 clang-tidy
+dsymutil
+git-clang-format
 ld.lld
 ld64.lld
 lld
 lld-link
+llvm-addr2line
 llvm-ar
 llvm-as
 llvm-cfi-verify
@@ -23,8 +26,12 @@ llvm-nm
 llvm-objcopy
 llvm-objdump
 llvm-profdata
+llvm-ranlib
+llvm-readelf
 llvm-readobj
+llvm-size
 llvm-strip
+llvm-strings
 llvm-symbolizer
 sancov
 sanstats
