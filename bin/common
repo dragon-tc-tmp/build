@@ -87,8 +87,10 @@ finalize() {
 
 # Function to build LLVM
 build() {
-  # Speed up build with gold
-  export LD="ld.gold"
+  # Speed up build with gold if gcc is used
+  if [ "$DTC_USE_LLD" != "ON" ]; then
+    export LD="ld.gold"
+  fi
 
   # Build date
   export revision_date=$(date "+%Y%m%d");
