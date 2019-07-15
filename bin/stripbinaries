@@ -8,7 +8,6 @@ clang-check
 clang-format
 clang-tidy
 dsymutil
-git-clang-format
 ld.lld
 ld64.lld
 lld

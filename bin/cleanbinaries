@@ -17,6 +17,7 @@ clang-query
 clang-refactor
 clang-rename
 clang-reorder-fields
+clang-scan-deps
 clangd
 diagtool
 find-all-symbols
