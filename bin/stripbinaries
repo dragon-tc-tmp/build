@@ -52,18 +52,10 @@ cd $toolchainpath/bin
 strip $BINS2STRIP
 
 # Strip clang-x
-if [ "$clangversionReal" == "4.0" ]; then
-  strip clang-4
-elif [ "$clangversionReal" == "5.0" ]; then
-  strip clang-5
-elif [ "$clangversionReal" == "6.0" ]; then
-  strip clang-6
-elif [ "$clangversionReal" == "7.0" ]; then
-  strip clang-7
-elif [ "$clangversionReal" == "8.0" ]; then
-  strip clang-8
-elif [ "$clangversionReal" == "9.0" ]; then
+if [ "$clangversionReal" == "9.0" ]; then
   strip clang-9
+elif [ "$clangversionReal" == "10.0" ]; then
+  strip clang-10
 fi
 
 # Back to 
