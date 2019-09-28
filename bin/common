@@ -111,6 +111,7 @@ build() {
         -DLLVM_ENABLE_PROJECTS:STRING="clang;clang-tools-extra;compiler-rt;lld;libcxxabi;libcxx;openmp;polly" \
         -DLLVM_TOOL_OPENMP_BUILD:BOOL=ON \
         -DLINK_POLLY_INTO_TOOLS:BOOL=ON \
+        -DLLVM_ENABLE_LIBCXX:BOOL=ON \
         -DLLVM_ENABLE_PIC:BOOL=ON \
         -DLLVM_PARALLEL_COMPILE_JOBS=$JOBS \
         -DLLVM_PARALLEL_LINK_JOBS=$JOBS \
@@ -138,6 +139,8 @@ build() {
         -DCOMPILER_RT_BUILD_XRAY:BOOL=OFF \
         -DCOMPILER_RT_BUILD_LIBFUZZER:BOOL=ON \
         -DCOMPILER_RT_FUZZER_LINK_LIBCXX:BOOL=OFF \
+        -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY:BOOL=ON \
+        -DLIBCXX_ENABLE_ABI_LINKER_SCRIPT:BOOL=OFF \
         $TOOLCHAIN_ROOT/llvm-project/llvm;
 
   # Find Time Before Build
